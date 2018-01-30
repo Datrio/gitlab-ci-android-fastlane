@@ -1,13 +1,13 @@
 FROM anapsix/alpine-java:8_jdk
-LABEL maintainer="United Classifieds <unitedclassifiedsapps@gmail.com>"
+LABEL maintainer="Dariusz Siedlecki <datrio@gmail.com>"
 
 ENV LC_ALL "en_US.UTF-8"
 ENV LANGUAGE "en_US.UTF-8"
 ENV LANG "en_US.UTF-8"
 
 ENV VERSION_SDK_TOOLS "3859397"
-ENV VERSION_BUILD_TOOLS "26.0.3"
-ENV VERSION_TARGET_SDK "26"
+ENV VERSION_BUILD_TOOLS "27.0.3"
+ENV VERSION_TARGET_SDK "27"
 
 ENV ANDROID_HOME "/sdk"
 
@@ -30,6 +30,8 @@ RUN apk update && apk add --no-cache \
     openssh \
     g++ \
     make \
+    cmake \
+    ninja \
     && rm -rf /tmp/* /var/tmp/*
 
 ADD https://dl.google.com/android/repository/sdk-tools-linux-${VERSION_SDK_TOOLS}.zip /tools.zip
@@ -41,6 +43,7 @@ RUN yes | ${ANDROID_HOME}/tools/bin/sdkmanager --licenses
 RUN mkdir -p $HOME/.android && touch $HOME/.android/repositories.cfg
 RUN ${ANDROID_HOME}/tools/bin/sdkmanager "tools" "platforms;android-${VERSION_TARGET_SDK}" "build-tools;${VERSION_BUILD_TOOLS}"
 RUN ${ANDROID_HOME}/tools/bin/sdkmanager "extras;android;m2repository" "extras;google;google_play_services" "extras;google;m2repository"
+RUN ${ANDROID_HOME}/tools/bin/sdkmanager "ndk-bundle"
 
 RUN gem install fastlane
 
