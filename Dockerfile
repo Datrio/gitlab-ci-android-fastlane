@@ -32,6 +32,8 @@ RUN apk update && apk add --no-cache \
     make \
     cmake \
     ninja \
+    nodejs \
+    python \
     && rm -rf /tmp/* /var/tmp/*
 
 ADD https://dl.google.com/android/repository/sdk-tools-linux-${VERSION_SDK_TOOLS}.zip /tools.zip
