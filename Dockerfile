@@ -50,8 +50,7 @@ RUN ${ANDROID_HOME}/tools/bin/sdkmanager "ndk-bundle"
 
 RUN gem install fastlane
 
-RUN npm install -g webpack
-RUN npm install -g webpack-cli
+RUN npm install -g webpack webpack-cli wrapper-webpack-plugin
 
 ADD id_rsa $HOME/.ssh/id_rsa
 ADD id_rsa.pub $HOME/.ssh/id_rsa.pub
