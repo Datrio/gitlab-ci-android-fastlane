@@ -28,6 +28,7 @@ RUN apk update && apk add --no-cache \
     ruby-rdoc \
     ruby-irb \
     openssh \
+    openssh-server \
     g++ \
     make \
     cmake \
