@@ -48,8 +48,7 @@ RUN ${ANDROID_HOME}/tools/bin/sdkmanager "tools" "platforms;android-${VERSION_TA
 RUN ${ANDROID_HOME}/tools/bin/sdkmanager "extras;android;m2repository" "extras;google;google_play_services" "extras;google;m2repository"
 RUN ${ANDROID_HOME}/tools/bin/sdkmanager "ndk-bundle"
 
-RUN gem install fastlane
-RUN fastlane add_plugin automated_test_emulator_run
+RUN gem install fastlane dotenv
 
 RUN npm install -g webpack webpack-cli wrapper-webpack-plugin
 
