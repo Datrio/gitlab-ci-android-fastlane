@@ -49,6 +49,7 @@ RUN ${ANDROID_HOME}/tools/bin/sdkmanager "extras;android;m2repository" "extras;g
 RUN ${ANDROID_HOME}/tools/bin/sdkmanager "ndk-bundle"
 
 RUN gem install fastlane
+RUN fastlane add_plugin automated_test_emulator_run
 
 RUN npm install -g webpack webpack-cli wrapper-webpack-plugin
 
