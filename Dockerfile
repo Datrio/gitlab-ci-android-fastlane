@@ -48,6 +48,11 @@ RUN ${ANDROID_HOME}/tools/bin/sdkmanager "tools" "platforms;android-${VERSION_TA
 RUN ${ANDROID_HOME}/tools/bin/sdkmanager "extras;android;m2repository" "extras;google;google_play_services" "extras;google;m2repository"
 RUN ${ANDROID_HOME}/tools/bin/sdkmanager "ndk-bundle"
 
+RUN mkdir -p $HOME/lokalise && cd $HOME/lokalise
+RUN wget -O ./inst.tgz https://s3-eu-west-1.amazonaws.com/lokalise-assets/cli/lokalise-0.44-linux-amd64.tgz
+RUN tar -xvzf ./inst.tgz
+RUN mv ./lokalise /usr/local/bin/lokalise
+
 RUN gem install fastlane dotenv json
 
 RUN npm install -g webpack webpack-cli wrapper-webpack-plugin
