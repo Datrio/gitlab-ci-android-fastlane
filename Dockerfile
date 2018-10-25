@@ -31,7 +31,7 @@ RUN apk update && apk add --no-cache \
     openssh-server \
     g++ \
     make \
-    'cmake=3.6.3' \
+    cmake \
     ninja \
     nodejs \
     python \
