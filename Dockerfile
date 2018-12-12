@@ -53,7 +53,9 @@ RUN wget -O ./inst.tgz https://s3-eu-west-1.amazonaws.com/lokalise-assets/cli/lo
 RUN tar -xvzf ./inst.tgz
 RUN mv ./lokalise /usr/local/bin/lokalise
 
-RUN gem install fastlane dotenv json
+RUN gem install fastlane
+RUN gem install dotenv
+RUN gem install json
 RUN fastlane add_plugin run_tests_firebase_testlab
 
 RUN npm install -g webpack webpack-cli wrapper-webpack-plugin
