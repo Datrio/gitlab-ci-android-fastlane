@@ -56,7 +56,17 @@ RUN mv ./lokalise /usr/local/bin/lokalise
 RUN gem install fastlane
 RUN gem install dotenv
 RUN gem install json
-RUN fastlane add_plugin run_tests_firebase_testlab
+
+# Downloading gcloud package
+RUN curl https://dl.google.com/dl/cloudsdk/release/google-cloud-sdk.tar.gz > /tmp/google-cloud-sdk.tar.gz
+
+# Installing the package
+RUN mkdir -p /usr/local/gcloud
+RUN tar -C /usr/local/gcloud -xvf /tmp/google-cloud-sdk.tar.gz
+RUN /usr/local/gcloud/google-cloud-sdk/install.sh --quiet
+
+# Adding the package path to local
+ENV PATH $PATH:/usr/local/gcloud/google-cloud-sdk/bin
 
 RUN npm install -g webpack webpack-cli wrapper-webpack-plugin
 
