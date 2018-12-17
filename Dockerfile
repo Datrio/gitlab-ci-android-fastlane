@@ -34,6 +34,7 @@ RUN apk update && apk add --no-cache \
     cmake \
     ninja \
     nodejs \
+    nodejs-npm \
     python \
     && rm -rf /tmp/* /var/tmp/*
 
