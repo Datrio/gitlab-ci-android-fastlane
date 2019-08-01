@@ -20,9 +20,8 @@ RUN apk update && apk add --no-cache \
     wget \
     tar \
     unzip \
-    lib32stdc++6 \
-    lib32z1 \
-    libqt5widgets5 \
+    libstdc++6 \
+    zlib \
     expect \
     bash \
     perl \
