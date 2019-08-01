@@ -66,7 +66,7 @@ RUN ${ANDROID_HOME}/tools/bin/sdkmanager "extras;m2repository;com;android;suppor
 RUN ${ANDROID_HOME}/tools/bin/sdkmanager "extras;m2repository;com;android;support;constraint;constraint-layout-solver;1.0.2"
 RUN ${ANDROID_HOME}/tools/bin/sdkmanager "ndk-bundle"
 
-RUN yes | ${ANDROID_HOME}/tools/bin/sdkmanager "system-images;android-${VERSION_TARGET_SDK};google_apis;x86_64" "system-images;android-${VERSION_TARGET_SDK};google_apis;arm64-v8a"
+RUN yes | ${ANDROID_HOME}/tools/bin/sdkmanager "system-images;android-${VERSION_TARGET_SDK};google_apis;x86_64"
 
 RUN mkdir -p $HOME/lokalise && cd $HOME/lokalise
 RUN wget -O ./inst.tgz https://s3-eu-west-1.amazonaws.com/lokalise-assets/cli/lokalise-0.44-linux-amd64.tgz
