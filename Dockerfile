@@ -11,12 +11,19 @@ ENV VERSION_TARGET_SDK "28"
 
 ENV ANDROID_HOME "/sdk"
 
-ENV PATH "$PATH:${ANDROID_HOME}/tools:${ANDROID_HOME}/tools/bin:${ANDROID_HOME}/platform-tools"
+ENV PATH "$PATH:${ANDROID_HOME}/tools:$PATH:${ANDROID_HOME}/emulator:${ANDROID_HOME}/tools/bin:${ANDROID_HOME}/platform-tools"
 ENV DEBIAN_FRONTEND noninteractive
 
 ENV HOME "/root"
 
 RUN apk update && apk add --no-cache \
+    wget \
+    tar \
+    unzip \
+    lib32stdc++6 \
+    lib32z1 \
+    libqt5widgets5 \
+    expect \
     bash \
     perl \
     curl \
@@ -42,13 +49,25 @@ ADD https://dl.google.com/android/repository/sdk-tools-linux-${VERSION_SDK_TOOLS
 RUN unzip /tools.zip -d /sdk && \
     rm -v /tools.zip
 
+# Workaround for host bitness error with android emulator
+# https://stackoverflow.com/a/37604675/455578
+RUN mv /bin/sh /bin/sh.backup \
+  && cp /bin/bash /bin/sh
+
+COPY android-wait-for-emulator /usr/local/bin/android-wait-for-emulator
+COPY assure_emulator_awake.sh /usr/local/bin/assure_emulator_awake.sh
+
 RUN yes | ${ANDROID_HOME}/tools/bin/sdkmanager --licenses
 RUN yes | ${ANDROID_HOME}/tools/bin/sdkmanager "platforms;android-${VERSION_TARGET_SDK}"
 
 RUN mkdir -p $HOME/.android && touch $HOME/.android/repositories.cfg
-RUN ${ANDROID_HOME}/tools/bin/sdkmanager "tools" "build-tools;${VERSION_BUILD_TOOLS}"
+RUN ${ANDROID_HOME}/tools/bin/sdkmanager "tools" "platform-tools" "build-tools;${VERSION_BUILD_TOOLS}"
 RUN ${ANDROID_HOME}/tools/bin/sdkmanager "extras;android;m2repository" "extras;google;google_play_services" "extras;google;m2repository"
+RUN ${ANDROID_HOME}/tools/bin/sdkmanager "extras;m2repository;com;android;support;constraint;constraint-layout;1.0.2"
+RUN ${ANDROID_HOME}/tools/bin/sdkmanager "extras;m2repository;com;android;support;constraint;constraint-layout-solver;1.0.2"
 RUN ${ANDROID_HOME}/tools/bin/sdkmanager "ndk-bundle"
+
+RUN yes | ${ANDROID_HOME}/tools/bin/sdkmanager "system-images;android-${VERSION_TARGET_SDK};google_apis;x86_64" "system-images;android-${VERSION_TARGET_SDK};google_apis;arm64-v8a"
 
 RUN mkdir -p $HOME/lokalise && cd $HOME/lokalise
 RUN wget -O ./inst.tgz https://s3-eu-west-1.amazonaws.com/lokalise-assets/cli/lokalise-0.44-linux-amd64.tgz
