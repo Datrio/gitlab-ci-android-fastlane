@@ -44,6 +44,11 @@ RUN apk update && apk add --no-cache \
     python \
     && rm -rf /tmp/* /var/tmp/*
 
+# Workaround for 
+# Warning: File /root/.android/repositories.cfg could not be loaded.
+RUN mkdir /root/.android \
+  && touch /root/.android/repositories.cfg
+
 ADD https://dl.google.com/android/repository/sdk-tools-linux-${VERSION_SDK_TOOLS}.zip /tools.zip
 RUN unzip /tools.zip -d /sdk && \
     rm -v /tools.zip
