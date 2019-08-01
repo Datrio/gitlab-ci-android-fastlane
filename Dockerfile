@@ -20,7 +20,7 @@ RUN apk update && apk add --no-cache \
     wget \
     tar \
     unzip \
-    libstdc++6 \
+#    libstdc++6 \
     zlib \
     expect \
     bash \
