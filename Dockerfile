@@ -38,6 +38,10 @@ RUN apk update && apk add --no-cache \
     python \
     && rm -rf /tmp/* /var/tmp/*
 
+RUN apk add vips-dev fftw-dev build-base --update-cache \
+    --repository https://alpine.global.ssl.fastly.net/alpine/edge/community/ \
+    --repository https://alpine.global.ssl.fastly.net/alpine/edge/main
+
 ADD https://dl.google.com/android/repository/sdk-tools-linux-${VERSION_SDK_TOOLS}.zip /tools.zip
 RUN unzip /tools.zip -d /sdk && \
     rm -v /tools.zip
